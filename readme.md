@@ -43,3 +43,12 @@ Decorator<R(Args...)> atomic(R (*f)(Args...), std::shared_ptr<std::mutex> mtx)
 }
 ```
 
+## Provided decorators
+
+This library also provides the following decorators:
+
+* Memoize (memoize.hpp): Memoizes the results of invocations, immediately
+  returning the previous result if an identical call was made in the past.
+  This allows the client to avoid recomputation if the function is
+  deterministic.
+
