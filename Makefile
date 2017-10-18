@@ -9,6 +9,9 @@ all: test
 test: test.o decorator.hpp
 	$(CXX) $(CXXFLAGS) test.o -o $@ $(LDLIBS)
 
+runtest: test
+	./test
+
 .PHONY:
 clean:
 	rm -f *.o test
