@@ -29,7 +29,7 @@ protected by a mutex, then, the following factory function may be useful:
 
 ```c++
 template <class R, class ... Args>
-Decorator<R(Args...)> atomic(R (*f)(Args...), std::mutex *mtx)
+Decorator<R(Args...)> atomic(R (*f)(Args...), std::shared_ptr<std::mutex> mtx)
 {
     return Decorator<R(Args...)>(
               [mtx]() { mtx->lock(); }

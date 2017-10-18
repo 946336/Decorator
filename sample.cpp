@@ -2,6 +2,7 @@
 
 #include <mutex>
 #include <thread>
+#include <memory>
 
 #include <stdio.h>
 
@@ -9,7 +10,7 @@ const int nThreads = 10;
 const int splitPersonalities = 100000;
 
 template <class R, class ... Args>
-Decorator<R(Args...)> atomic(R (*f)(Args...), std::mutex *mtx)
+Decorator<R(Args...)> atomic(R (*f)(Args...), std::shared_ptr<std::mutex> mtx)
 {
     return Decorator<R(Args...)>(
               [mtx]() { mtx->lock(); }
@@ -30,9 +31,9 @@ int check_clock()
     return count;
 }
 
-std::mutex clock_lock;
-auto centralized_clock = atomic(clock_in, &clock_lock);
-auto check_clock_safely = atomic(check_clock, &clock_lock);
+std::shared_ptr<std::mutex> clock_lock= std::make_shared<std::mutex>();
+auto centralized_clock = atomic(clock_in, std::shared_ptr<std::mutex>(clock_lock));
+auto check_clock_safely = atomic(check_clock, std::shared_ptr<std::mutex>(clock_lock));
 
 void clock_in_a_lot()
 {

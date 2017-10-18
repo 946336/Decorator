@@ -4,15 +4,15 @@ CXXFLAGS = -Wall -Wextra -Werror -pedantic -g -std=c++11
 
 LDLIBS = -lpthread
 
-all: test
+all: sample
 
-test: test.o decorator.hpp
-	$(CXX) $(CXXFLAGS) test.o -o $@ $(LDLIBS)
+sample: sample.o decorator.hpp
+	$(CXX) $(CXXFLAGS) sample.o -o $@ $(LDLIBS)
 
-runtest: test
-	./test
+runsample: sample
+	./sample
 
 .PHONY:
 clean:
-	rm -f *.o test
+	rm -f *.o sample
 
