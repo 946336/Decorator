@@ -1,6 +1,6 @@
 # Decorator
 
-A small decorator library targeting C++14, providing decorators for functions.
+A small decorator library targeting C++11, providing decorators for functions.
 
 This library provides one class for client use: `Decorator`. `Decorator` has
 the following interface:

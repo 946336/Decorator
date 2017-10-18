@@ -1,6 +1,6 @@
 
 CXX = g++
-CXXFLAGS = -Wall -Wextra -Werror -pedantic -g -std=c++14
+CXXFLAGS = -Wall -Wextra -Werror -pedantic -g -std=c++11
 
 LDLIBS = -lpthread
 
