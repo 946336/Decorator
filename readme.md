@@ -5,6 +5,10 @@ A small decorator library targeting C++11, providing decorators for functions.
 This library provides one class for client use: `Decorator`. `Decorator` has
 the following interface:
 
+When `before` and `after` are not sufficient to do the job, clients should
+derive from `Decorator` and override `R operator() (Args...)` as necessary.
+Memoization is an example of when `before` and `after` are not sufficient.
+
 ```c++
 Decorator<R(Args...)>(
         std::function<void()> before,

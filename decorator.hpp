@@ -7,7 +7,7 @@ template <class> class Decorator;
 
 template <class R, class ...Args>
 class Decorator<R(Args...)> {
-    private:
+    protected:
         // RAII guarantees that the destructor will run if an exception is
         // thrown.
         struct Context_Manager {
@@ -27,6 +27,10 @@ class Decorator<R(Args...)> {
             Op on_leave_;
         };
 
+        std::function<void()> before_;
+        std::function<R(Args...)> f_;
+        std::function<void()> after_;
+
     public:
         Decorator(
                 std::function<void()> before,
@@ -34,17 +38,13 @@ class Decorator<R(Args...)> {
                 std::function<void()> after
                 )
             : before_(before), f_(f), after_(after) {}
+        virtual ~Decorator() {};
 
-        R operator() (Args... args)
+        virtual R operator() (Args... args)
         {
             Context_Manager mgr(before_, after_);
             return f_(args...);
         }
-
-    protected:
-        std::function<void()> before_;
-        std::function<R(Args...)> f_;
-        std::function<void()> after_;
 };
 
 #endif
