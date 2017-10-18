@@ -7,14 +7,6 @@ template <class> class Decorator;
 
 template <class R, class ...Args>
 class Decorator<R(Args...)> {
-    public:
-        Decorator(
-                std::function<void()> before,
-                std::function<R(Args...)> f,
-                std::function<void()> after
-                )
-            : before_(before), f_(f), after_(after) {}
-
     private:
         // RAII guarantees that the destructor will run if an exception is
         // thrown.
@@ -36,6 +28,13 @@ class Decorator<R(Args...)> {
         };
 
     public:
+        Decorator(
+                std::function<void()> before,
+                std::function<R(Args...)> f,
+                std::function<void()> after
+                )
+            : before_(before), f_(f), after_(after) {}
+
         R operator() (Args... args)
         {
             Context_Manager mgr(before_, after_);
